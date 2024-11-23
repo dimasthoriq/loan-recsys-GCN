@@ -9,7 +9,7 @@ from sklearn.metrics import confusion_matrix
 from sklearn.cluster import KMeans
 
 
-def cleaning_data(df):
+def preprocess_data(df):
     df = df[df['LoanStatus'] != 'Cancelled']
     df['finished'] = df['LoanStatus'].apply(lambda x: 1 if x in ['Completed', 'Chargedoff', 'Defaulted'] else 0)
     df['risk'] = df['LoanStatus'].apply(lambda x:
@@ -84,9 +84,9 @@ def discretize(df, k=9):
     return df
 
 
-def preprocess_data(path='./prosperLoanData.csv'):
+def get_data(path='./prosperLoanData.csv'):
     df = pd.read_csv(path)
-    df = cleaning_data(df)
+    df = preprocess_data(df)
     df = risk_prediction(df)
     df = discretize(df)
     return df
