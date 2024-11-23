@@ -10,11 +10,12 @@ from sklearn.cluster import KMeans
 
 
 def preprocess_data(df):
+    df = df.copy()
     df = df[df['LoanStatus'] != 'Cancelled']
-    df.loc[:, 'finished'] = df['LoanStatus'].apply(lambda x: 1 if x in ['Completed', 'Chargedoff', 'Defaulted'] else 0)
-    df.loc[:, 'risk'] = df['LoanStatus'].apply(lambda x:
-                                               1 if x in ['Chargedoff', 'Defaulted']
-                                               else (0 if x == 'Completed' else None))
+    df.loc[:, 'finished'] = df.loc[:, 'LoanStatus'].apply(lambda x: 1 if x in ['Completed', 'Chargedoff', 'Defaulted'] else 0)
+    df.loc[:, 'risk'] = df.loc[:, 'LoanStatus'].apply(lambda x:
+                                                      1 if x in ['Chargedoff', 'Defaulted']
+                                                      else (0 if x == 'Completed' else None))
 
     keep_cols = ['LoanKey', 'MemberKey', 'Term', 'BorrowerRate', 'LenderYield', 'EstimatedEffectiveYield',
                  'EstimatedLoss',
