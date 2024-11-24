@@ -12,7 +12,9 @@ from sklearn.cluster import KMeans
 def preprocess_data(df):
     df = df.copy()
     df = df[df['LoanStatus'] != 'Cancelled']
-    df.loc[:, 'finished'] = df.loc[:, 'LoanStatus'].apply(lambda x: 1 if x in ['Completed', 'Chargedoff', 'Defaulted'] else 0)
+    df.loc[:, 'finished'] = df.loc[:, 'LoanStatus'].apply(lambda x:
+                                                          1 if x in ['Completed', 'Chargedoff', 'Defaulted']
+                                                          else 0)
     df.loc[:, 'risk'] = df.loc[:, 'LoanStatus'].apply(lambda x:
                                                       1 if x in ['Chargedoff', 'Defaulted']
                                                       else (0 if x == 'Completed' else None))
@@ -38,6 +40,13 @@ def preprocess_data(df):
 
     df[num_cols] = df[num_cols].apply(lambda x: (x - x.mean()) / x.std())
     df = pd.get_dummies(df, columns=['EmploymentStatus'], drop_first=True)
+
+    # Rename LoanKey into i1, i2, i3, ... and MemberKey into u1, u2, u3, ...
+    unique_loan_keys = {key: f"i{idx + 1}" for idx, key in enumerate(df['LoanKey'].unique())}
+    df['LoanKey'] = df['LoanKey'].map(unique_loan_keys)
+
+    unique_member_keys = {key: f"u{idx + 1}" for idx, key in enumerate(df['MemberKey'].unique())}
+    df['MemberKey'] = df['MemberKey'].map(unique_member_keys)
     return df
 
 
@@ -85,9 +94,10 @@ def discretize(df, k=9):
     return df
 
 
-def get_data(path='./prosperLoanData.csv'):
+def get_data(path='./prosperLoanData.csv', k=9):
     df = pd.read_csv(path)
     df = preprocess_data(df)
     df = risk_prediction(df)
-    df = discretize(df)
+    df = discretize(df, k=k)
+    print(df.shape)
     return df
