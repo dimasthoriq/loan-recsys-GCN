@@ -3,6 +3,9 @@ Author: Dimas Ahmad
 Description: This file contains utility functions for the project.
 """
 
+import torch
+import numpy as np
+import scipy.sparse as sp
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix
@@ -101,3 +104,94 @@ def get_data(path='./prosperLoanData.csv', k=9):
     df = discretize(df, k=k)
     print(df.shape)
     return df
+
+
+def get_interaction_matrix(data):
+    # Create a matrix of investor-loan interactions
+    member_mapping = {member: idx for idx, member in enumerate(data['MemberKey'].unique())}
+    loan_mapping = {loan: idx for idx, loan in enumerate(data['LoanKey'].unique())}
+    risk_mapping = {risk: idx for idx, risk in enumerate(data['risk'].unique())}
+    return_mapping = {ret: idx for idx, ret in enumerate(data['LenderYield'].unique())}
+
+    n = len(member_mapping)
+    m = len(loan_mapping)
+    p = len(risk_mapping)
+    q = len(return_mapping)
+
+    R = np.zeros((n, m), dtype=np.int8)
+    P = np.zeros((m, p), dtype=np.int8)
+    Q = np.zeros((m, q), dtype=np.int8)
+
+    # Fill the matrix using the mappings
+    for _, row in data.iterrows():
+        member_idx = member_mapping[row['MemberKey']]
+        loan_idx = loan_mapping[row['LoanKey']]
+        risk_idx = risk_mapping[row['risk']]
+        return_idx = return_mapping[row['LenderYield']]
+
+        R[member_idx, loan_idx] = 1
+        P[loan_idx, risk_idx] = 1
+        Q[loan_idx, return_idx] = 1
+
+    return R, P, Q
+
+
+def split_train_test(R, train_size=0.8):
+    coo = R.tocoo()
+    edges = np.vstack([coo.row, coo.col]).T
+    np.random.shuffle(edges)
+
+    split = int(len(edges) * train_size)
+    train_edges = edges[:split]
+    test_edges = edges[split:]
+    return train_edges, test_edges
+
+
+def get_sparse_matrices(data_path, k=9):
+    data = get_data(data_path, k=k)
+    R, P, Q = get_interaction_matrix(data)
+    sR = sp.csr_matrix(R)
+    sP = sp.csr_matrix(P)
+    sQ = sp.csr_matrix(Q)
+
+    return sR, sP, sQ
+
+
+def build_adjacency(R, P, Q, weighted=False):
+    n, m = R.shape
+    p = P.shape[1]
+    q = Q.shape[1]
+
+    # Diagonal
+    I_n = sp.eye(n, format='csr') if weighted else sp.csr_matrix((n, n))
+    I_m = sp.eye(m, format='csr') if weighted else sp.csr_matrix((m, m))
+    I_p = sp.eye(p, format='csr') if weighted else sp.csr_matrix((p, p))
+    I_q = sp.eye(q, format='csr') if weighted else sp.csr_matrix((q, q))
+
+    # Zero matrices for padding
+    Z_np = sp.csr_matrix((n, p))
+    Z_nq = sp.csr_matrix((n, q))
+    Z_qp = sp.csr_matrix((q, p))
+    Z_pq = sp.csr_matrix((p, q))
+
+    top_row = sp.hstack([I_n, R, Z_np, Z_nq], format='csr')
+    second_row = sp.hstack([R.T, I_m, P, Q], format='csr')
+    third_row = sp.hstack([Z_np.T, P.T, I_p, Z_pq], format='csr')
+    fourth_row = sp.hstack([Z_nq.T, Q.T, Z_qp, I_q], format='csr')
+
+    A = sp.vstack([top_row, second_row, third_row, fourth_row], format='csr')
+    return A
+
+
+def symmetric_normalization(A):
+    degree = np.array(A.sum(axis=1)).flatten()
+    d_inv_sqrt = np.power(degree, -0.5, out=np.zeros_like(degree, dtype=np.float32), where=degree > 0)
+    D_inv_sqrt = sp.diags(d_inv_sqrt)
+    return D_inv_sqrt @ A @ D_inv_sqrt
+
+
+def to_torch_sparse(A):
+    coo = A.tocoo()
+    indices = torch.stack([torch.LongTensor(coo.row), torch.LongTensor(coo.col)])
+    values = torch.FloatTensor(coo.data)
+    return torch.sparse_coo_tensor(indices, values, torch.Size(coo.shape)).coalesce()
