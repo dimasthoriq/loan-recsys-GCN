@@ -196,7 +196,7 @@ class Trainer:
         print('Training completed in {:.0f}m {:.0f}s'.format(duration // 60, duration % 60))
         self.model.load_state_dict(self.best_model)
 
-        save_dir = self.config['save_dir']
+        save_dir = self.config['save_path']
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
 
