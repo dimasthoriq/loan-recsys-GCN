@@ -106,7 +106,6 @@ class Trainer:
             loss = bpr_loss(pos_scores, neg_scores)
         return loss.item()
 
-
     def validate(self, investors, loans):
         self.model.eval()
         with torch.no_grad():
