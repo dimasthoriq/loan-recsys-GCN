@@ -185,6 +185,12 @@ class Trainer:
                 print(f'Epoch {epoch + 1}, Train Loss: {epoch_train_loss:.4f}, '
                       f'Val Loss: {epoch_val_loss:.4f}, '
                       f'Best: {self.best_epoch + 1}')
+
+                ndgc25, pr25, rc25, ndgc50, pr50, rc50 = self.validate(self.test_investors,
+                                                                       self.test_loans)
+                print(f'Final NDCG@25: {ndgc25:.4f}, '
+                      f'Precision@25: {pr25:.4f}, Recall@25: {rc25:.4f}, '
+                      f'NDCG@50: {ndgc50:.4f}, Precision@50: {pr50:.4f}, Recall@50: {rc50:.4f}')
                 break
 
             if epoch_val_loss < self.best_loss:

@@ -7,9 +7,9 @@ config = {
     # Training
     "epochs": 1000,
     "learning_rate": 5e-2,
-    "weight_decay": 1e-4,
+    "weight_decay": 1e-6,
     "patience": 50,
-    "min_delta": 1e-4,
+    "min_delta": 1e-6,
     "sched_factor": 0.5,
     "sched_patience": 10,
 
@@ -34,6 +34,8 @@ if __name__ == '__main__':
     R, P, Q = get_sparse_matrices(config["path"], config["discrete_levels"])
     for i in [False, True]:
         config["weighted"] = i
+        if i:
+            config['learning_rate'] = 5e-4
         print("\nWeighted: ", i)
         for seed in [15, 24, 35]:
             print("\nSeed: ", seed)
