@@ -34,8 +34,6 @@ if __name__ == '__main__':
     R, P, Q = get_sparse_matrices(config["path"], config["discrete_levels"])
     for i in [False, True]:
         config["weighted"] = i
-        if i:
-            config['learning_rate'] = 5e-3
         print("\nWeighted: ", i)
         for seed in [15, 24, 35]:
             print("\nSeed: ", seed)

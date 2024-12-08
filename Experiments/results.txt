@@ -75,3 +75,57 @@ Training completed in 8m 27s
 Weighted:  True
 
 Seed:  15
+Epoch 1, NDCG@25: 0.8493, Precision@25: 0.0384, Recall@25: 0.9297, NDCG@50: 0.8532, Precision@50: 0.0197, Recall@50: 0.9493
+Epoch 1, Train Loss: 0.6931, Val Loss: 0.6931, Best: 1
+Epoch 10, Train Loss: 0.6931, Val Loss: 0.6931, Best: 2
+Epoch 20, Train Loss: 0.6930, Val Loss: 0.6931, Best: 2
+Epoch 25, NDCG@25: 0.0000, Precision@25: 0.0000, Recall@25: 0.0000, NDCG@50: 0.0000, Precision@50: 0.0000, Recall@50: 0.0000
+Epoch 30, Train Loss: 0.3918, Val Loss: 0.7503, Best: 28
+Epoch 40, Train Loss: 0.4042, Val Loss: 0.6108, Best: 28
+Epoch 50, NDCG@25: 0.0000, Precision@25: 0.0000, Recall@25: 0.0000, NDCG@50: 0.0000, Precision@50: 0.0000, Recall@50: 0.0000
+Epoch 50, Train Loss: 0.3746, Val Loss: 0.6269, Best: 28
+Epoch 60, Train Loss: 0.3533, Val Loss: 0.6274, Best: 28
+Epoch 70, Train Loss: 0.3426, Val Loss: 0.6295, Best: 28
+Epoch 75, NDCG@25: 0.0000, Precision@25: 0.0000, Recall@25: 0.0000, NDCG@50: 0.0000, Precision@50: 0.0000, Recall@50: 0.0000
+Early stopping
+Epoch 78, Train Loss: 0.3380, Val Loss: 0.6362, Best: 28
+Final NDCG@25: 0.0000, Precision@25: 0.0000, Recall@25: 0.0000, NDCG@50: 0.0000, Precision@50: 0.0000, Recall@50: 0.0000
+Training completed in 3m 54s
+
+Seed:  24
+Epoch 1, NDCG@25: 0.8562, Precision@25: 0.0385, Recall@25: 0.9344, NDCG@50: 0.8600, Precision@50: 0.0197, Recall@50: 0.9537
+Epoch 1, Train Loss: 0.6931, Val Loss: 0.6931, Best: 1
+Epoch 10, Train Loss: 0.6931, Val Loss: 0.6931, Best: 2
+Epoch 20, Train Loss: 0.6930, Val Loss: 0.6931, Best: 2
+Epoch 25, NDCG@25: 0.0000, Precision@25: 0.0000, Recall@25: 0.0000, NDCG@50: 0.0000, Precision@50: 0.0000, Recall@50: 0.0000
+Epoch 30, Train Loss: 0.3483, Val Loss: 0.7461, Best: 28
+Epoch 40, Train Loss: 0.4130, Val Loss: 0.6168, Best: 35
+Epoch 50, NDCG@25: 0.0000, Precision@25: 0.0000, Recall@25: 0.0000, NDCG@50: 0.0000, Precision@50: 0.0000, Recall@50: 0.0000
+Epoch 50, Train Loss: 0.3757, Val Loss: 0.6189, Best: 35
+Epoch 60, Train Loss: 0.3519, Val Loss: 0.6262, Best: 35
+Epoch 70, Train Loss: 0.3342, Val Loss: 0.6356, Best: 35
+Epoch 75, NDCG@25: 0.0000, Precision@25: 0.0000, Recall@25: 0.0000, NDCG@50: 0.0000, Precision@50: 0.0000, Recall@50: 0.0000
+Epoch 80, Train Loss: 0.3290, Val Loss: 0.6411, Best: 35
+Early stopping
+Epoch 85, Train Loss: 0.3243, Val Loss: 0.6409, Best: 35
+Final NDCG@25: 0.0000, Precision@25: 0.0000, Recall@25: 0.0000, NDCG@50: 0.0000, Precision@50: 0.0000, Recall@50: 0.0000
+Training completed in 3m 56s
+
+Seed:  35
+Epoch 1, NDCG@25: 0.8561, Precision@25: 0.0385, Recall@25: 0.9313, NDCG@50: 0.8598, Precision@50: 0.0197, Recall@50: 0.9501
+Epoch 1, Train Loss: 0.6931, Val Loss: 0.6931, Best: 1
+Epoch 10, Train Loss: 0.6931, Val Loss: 0.6931, Best: 2
+Epoch 20, Train Loss: 0.6930, Val Loss: 0.6931, Best: 2
+Epoch 25, NDCG@25: 0.0000, Precision@25: 0.0000, Recall@25: 0.0000, NDCG@50: 0.0000, Precision@50: 0.0000, Recall@50: 0.0001
+Epoch 30, Train Loss: 0.3448, Val Loss: 0.7307, Best: 28
+Epoch 40, Train Loss: 0.4186, Val Loss: 0.6154, Best: 35
+Epoch 50, NDCG@25: 0.0000, Precision@25: 0.0000, Recall@25: 0.0000, NDCG@50: 0.0000, Precision@50: 0.0000, Recall@50: 0.0000
+Epoch 50, Train Loss: 0.3746, Val Loss: 0.6171, Best: 35
+Epoch 60, Train Loss: 0.3586, Val Loss: 0.6222, Best: 35
+Epoch 70, Train Loss: 0.3438, Val Loss: 0.6284, Best: 35
+Epoch 75, NDCG@25: 0.0000, Precision@25: 0.0000, Recall@25: 0.0000, NDCG@50: 0.0000, Precision@50: 0.0000, Recall@50: 0.0000
+Epoch 80, Train Loss: 0.3364, Val Loss: 0.6364, Best: 35
+Early stopping
+Epoch 85, Train Loss: 0.3325, Val Loss: 0.6356, Best: 35
+Final NDCG@25: 0.0000, Precision@25: 0.0000, Recall@25: 0.0000, NDCG@50: 0.0000, Precision@50: 0.0000, Recall@50: 0.0000
+Training completed in 4m 4s
