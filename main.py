@@ -35,7 +35,7 @@ if __name__ == '__main__':
     for i in [False, True]:
         config["weighted"] = i
         if i:
-            config['learning_rate'] = 5e-4
+            config['learning_rate'] = 5e-3
         print("\nWeighted: ", i)
         for seed in [15, 24, 35]:
             print("\nSeed: ", seed)
@@ -50,4 +50,4 @@ if __name__ == '__main__':
             plt.xlabel('Epoch')
             plt.ylabel('Loss')
             plt.legend()
-            plt.savefig(str(config["save_path"]) + 'loss.png')
+            plt.savefig(str(config["save_path"]) + str(i) + "W_" + str(seed) + "_loss" + ".png")
