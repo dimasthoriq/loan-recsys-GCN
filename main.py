@@ -30,15 +30,17 @@ config = {
     "save_path": './Experiments/'
 }
 
-R, P, Q = get_sparse_matrices(config["path"], config["discrete_levels"])
-trainer = Trainer(R, P, Q, config)
-train_losses, val_losses = trainer.train()
-model = trainer.model
+if __name__ == '__main__':
+    R, P, Q = get_sparse_matrices(config["path"], config["discrete_levels"])
+    trainer = Trainer(R, P, Q, config)
+    train_losses, val_losses = trainer.train()
+    model = trainer.model
 
-plt.figure(figsize=(10, 5))
-plt.plot(train_losses, label='Train loss')
-plt.plot(val_losses, label='Validation loss')
-plt.xlabel('Epoch')
-plt.ylabel('Loss')
-plt.legend()
-plt.savefig(str(config["save_path"]) + 'loss.png')
+    plt.figure(figsize=(10, 5))
+    plt.plot(train_losses, label='Train loss')
+    plt.plot(val_losses, label='Validation loss')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.legend()
+    plt.savefig(str(config["save_path"]) + 'loss.png')
+    plt.show()
