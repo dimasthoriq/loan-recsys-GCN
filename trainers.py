@@ -127,7 +127,7 @@ class Trainer:
                 all_loan_e = e[self.n: self.n+self.m]
 
                 scores = torch.matmul(all_loan_e, investor_e)
-                target = torch.zeros_like(self.m).to(self.device)
+                target = torch.zeros(self.m).to(self.device)
                 target[pos_loan] = 1
 
                 ndgc_25 = ndcg_at_k(target, scores, 25)
@@ -165,14 +165,14 @@ class Trainer:
             train_losses.append(epoch_train_loss)
             val_losses.append(epoch_val_loss)
 
-            if (epoch + 1) % self.config['val_every'] == 0:
+            if epoch == 0 or (epoch + 1) % self.config['val_every'] == 0:
                 ndgc25, pr25, rc25, ndgc50, pr50, rc50 = self.validate(self.test_investors,
                                                                        self.test_loans)
                 print(f'Epoch {epoch + 1}, NDCG@25: {ndgc25:.4f}, '
                       f'Precision@25: {pr25:.4f}, Recall@25: {rc25:.4f}, '
                       f'NDCG@50: {ndgc50:.4f}, Precision@50: {pr50:.4f}, Recall@50: {rc50:.4f}')
 
-            if (epoch + 1) % self.config['print_every'] == 0:
+            if epoch == 0 or (epoch + 1) % self.config['print_every'] == 0:
                 print(f'Epoch {epoch+1}, Train Loss: {epoch_train_loss:.4f}, '
                       f'Val Loss: {epoch_val_loss:.4f}, '
                       f'Best: {self.best_epoch+1}')
